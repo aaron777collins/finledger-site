@@ -1,0 +1,167 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Finledger Money | Your money, on your device</title>
+<meta name="description" content="A private finance app. Your money stays on your device, with AI that runs there.">
+<link rel="icon" type="image/png" sizes="32x32" href="icons/favicon-32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="icons/favicon-16.png">
+<link rel="apple-touch-icon" sizes="180x180" href="icons/apple-touch-icon.png">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="site-header">
+  <div class="site-header-inner">
+    <a class="brand" href="index.html">
+      <img src="icons/icon-512.png" width="28" height="28" alt="" loading="eager">
+      <span class="brand-name">Finledger</span>
+    </a>
+    <nav class="site-nav" aria-label="Site">
+      <a href="privacy.html">Privacy</a>
+      <a href="support.html">Support</a>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+  <div class="hero">
+    <div class="hero-copy">
+      <h1>Your money, on your device</h1>
+      <p class="lede">Finledger keeps track of your money without sending it anywhere. Your transactions, budgets and goals live on your device, with no account to create and no server to trust.</p>
+      <p class="badge">Coming soon to TestFlight and the app stores</p>
+    </div>
+    <div class="hero-media">
+      <div class="frame">
+        <img src="img/home-phone-light.webp" width="600" height="1298" alt="Finledger home screen showing how much is left to spend this month and whether spending is on track." loading="eager">
+      </div>
+    </div>
+  </div>
+
+  <section aria-labelledby="features-heading">
+    <div class="section-head">
+      <h2 id="features-heading">What it does</h2>
+      <p>Six screens, each answering one question about your money.</p>
+    </div>
+
+    <div class="feature">
+      <div class="feature-media">
+        <div class="frame">
+          <img src="img/home-phone-light.webp" width="600" height="1298" alt="Home screen with the month's remaining budget and pace shown as a single ruler." loading="lazy">
+        </div>
+      </div>
+      <div class="feature-copy">
+        <h3>One number that matters</h3>
+        <p>A home screen that answers one question: how much is left to spend this month, and whether you are on track. Everything else sits below it, in order.</p>
+      </div>
+    </div>
+
+    <div class="feature reverse">
+      <div class="feature-media">
+        <div class="frame">
+          <img src="img/ledger-phone-light.webp" width="600" height="1298" alt="Ledger screen listing charges grouped by day across every account." loading="lazy">
+        </div>
+      </div>
+      <div class="feature-copy">
+        <h3>Every account, one ledger</h3>
+        <p>A ledger that groups your charges by day, with every account in one list, and filters for the times you need them.</p>
+      </div>
+    </div>
+
+    <div class="feature">
+      <div class="feature-media">
+        <div class="frame">
+          <img src="img/budget-phone-light.webp" width="600" height="1298" alt="Budget screen with a category meter that includes a buffer zone before it reads as over." loading="lazy">
+        </div>
+      </div>
+      <div class="feature-copy">
+        <h3>Budgets with a buffer</h3>
+        <p>Budgets with a buffer, so a category going over doesn't break the month.</p>
+      </div>
+    </div>
+
+    <div class="feature reverse">
+      <div class="feature-media">
+        <div class="frame">
+          <img src="img/goals-phone-light.webp" width="600" height="1298" alt="Goals screen showing savings goals filling in a chosen order." loading="lazy">
+        </div>
+      </div>
+      <div class="feature-copy">
+        <h3>Goals that fill in order</h3>
+        <p>Goals that fill in the order you choose.</p>
+      </div>
+    </div>
+
+    <div class="feature">
+      <div class="feature-media">
+        <div class="frame">
+          <img src="img/recurring-phone-light.webp" width="600" height="1298" alt="Recurring screen listing subscriptions and repeating charges with their yearly cost." loading="lazy">
+        </div>
+      </div>
+      <div class="feature-copy">
+        <h3>Recurring charges, found for you</h3>
+        <p>Recurring charges found for you, with what they cost a year.</p>
+      </div>
+    </div>
+
+    <div class="feature reverse">
+      <div class="feature-media">
+        <div class="frame">
+          <img src="img/changes-phone-light.webp" width="600" height="1298" alt="Changes screen listing a history of edits, each with an undo action." loading="lazy">
+        </div>
+      </div>
+      <div class="feature-copy">
+        <h3>Every change is reversible</h3>
+        <p>Everything you do is reversible. Import a file, let a rule run, accept a proposal: it goes in Changes, and one tap puts it back.</p>
+      </div>
+    </div>
+
+    <div class="analyst-note">
+      <h3>An assistant that stays on your device</h3>
+      <p>An AI assistant that runs on your device. Ask it about your spending, and it can propose changes: recategorize a charge, set a budget, adjust a goal. It shows you every change before it happens, and every change it makes lands in Changes with an Undo.</p>
+      <p>It is off until you turn it on, and it works without ever talking to a server.</p>
+    </div>
+  </section>
+
+  <div class="band">
+    <div class="band-inner">
+      <h2>Your data stays on your device</h2>
+      <p>Finledger does not collect your data. There is no Finledger account and no Finledger server, so there is nowhere for your information to go.</p>
+      <ul>
+        <li><strong>Everything lives locally.</strong> Accounts, transactions, categories, budgets, goals and the change history are stored in a database file inside the app's own storage.</li>
+        <li><strong>iCloud sync is optional.</strong> If you turn it on, your data is encrypted on your device before it is sent, with a key held in your device's keychain, so nobody else can read it, including us and Apple.</li>
+        <li><strong>The analyst is off by default.</strong> Nothing you ask it leaves your device unless you set up a cloud endpoint yourself, and it will always tell you what would be sent first.</li>
+        <li><strong>Export or delete anytime.</strong> Everything can be exported as CSV or deleted entirely from Settings &gt; Data.</li>
+      </ul>
+      <p><a href="privacy.html">Read the full privacy policy</a>.</p>
+    </div>
+  </div>
+
+  <section aria-labelledby="platforms-heading">
+    <div class="section-head">
+      <h2 id="platforms-heading">Runs everywhere</h2>
+      <p>Finledger runs on iPhone, iPad, Mac, Windows, Linux and Android, from one codebase, rendered the same way on all five.</p>
+    </div>
+    <ul class="platform-list">
+      <li>iPhone</li>
+      <li>iPad</li>
+      <li>Mac</li>
+      <li>Windows</li>
+      <li>Linux</li>
+      <li>Android</li>
+    </ul>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="site-footer-inner">
+    <span>&copy; 2026 Finledger</span>
+    <nav class="footer-links" aria-label="Legal">
+      <a href="privacy.html">Privacy</a>
+      <a href="support.html">Support</a>
+    </nav>
+  </div>
+</footer>
+</body>
+</html>

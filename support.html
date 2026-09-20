@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Support | Finledger</title>
+<meta name="description" content="Finledger support: common questions, how to reach us, and how to report a bug.">
+<link rel="icon" type="image/png" sizes="32x32" href="icons/favicon-32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="icons/favicon-16.png">
+<link rel="apple-touch-icon" sizes="180x180" href="icons/apple-touch-icon.png">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="site-header">
+  <div class="site-header-inner">
+    <a class="brand" href="index.html">
+      <img src="icons/icon-512.png" width="28" height="28" alt="" loading="eager">
+      <span class="brand-name">Finledger</span>
+    </a>
+    <nav class="site-nav" aria-label="Site">
+      <a href="privacy.html">Privacy</a>
+      <a href="support.html">Support</a>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+  <article class="doc">
+    <h1>Finledger support</h1>
+    <p class="updated">Email <a href="mailto:aaron777collins@gmail.com">aaron777collins@gmail.com</a>. Please say which device and version you are on, which you can find in Settings &gt; About.</p>
+
+    <h2>Common questions</h2>
+
+    <h3>Where is my data kept?</h3>
+    <p>On your device, in the app's own storage. There is no Finledger account and no Finledger server. See the <a href="privacy.html">privacy policy</a>.</p>
+
+    <h3>How do I get my data out?</h3>
+    <p>Settings &gt; Data &gt; Export. You get a CSV file you can open in any spreadsheet.</p>
+
+    <h3>How do I delete everything?</h3>
+    <p>Settings &gt; Data &gt; Delete all data. It cannot be undone, so export first if you might want the file later.</p>
+
+    <h3>Does it sync between my devices?</h3>
+    <p>Yes, through your own iCloud account, on Apple devices. Turn it on in Settings &gt; iCloud sync. Your data is encrypted on your device before it is sent, so nobody else can read it, including us and Apple. Keep your recovery key: without it, and without a device that already has your data, nothing can be recovered.</p>
+
+    <h3>What is the analyst?</h3>
+    <p>An AI assistant that runs on your device. It can answer questions about your money and propose changes, such as recategorizing a charge or setting a budget. It never applies a change without showing it to you first, and every change it does make appears in Changes with an Undo.</p>
+
+    <h3>Does the analyst send my money data anywhere?</h3>
+    <p>No, unless you set up a cloud endpoint yourself in Settings &gt; Analyst. By default everything it does happens on your device. It needs to download a model file once, which comes from huggingface.co and contains nothing about you.</p>
+
+    <h3>Why is the model so large?</h3>
+    <p>The models are between a few hundred megabytes and several gigabytes, because that is what a capable on-device assistant takes. You choose which one to download, and you can delete it at any time in Settings &gt; Analyst.</p>
+
+    <h3>Can I use the app without the analyst?</h3>
+    <p>Yes. It is off until you turn it on, and everything else works without it.</p>
+
+    <h3>A number looks wrong.</h3>
+    <p>Please email with a screenshot and what you expected. Money is tracked in whole cents and every change is recorded, so a wrong figure is a bug worth fixing, not a rounding quirk.</p>
+
+    <h2>Reporting a bug</h2>
+    <p>Email with the steps you took, what you expected and what happened, plus your device and the version from Settings &gt; About. A screenshot helps. If the app crashed, say what you were doing at the time.</p>
+  </article>
+</main>
+
+<footer class="site-footer">
+  <div class="site-footer-inner">
+    <span>&copy; 2026 Finledger</span>
+    <nav class="footer-links" aria-label="Legal">
+      <a href="privacy.html">Privacy</a>
+      <a href="support.html">Support</a>
+    </nav>
+  </div>
+</footer>
+</body>
+</html>
