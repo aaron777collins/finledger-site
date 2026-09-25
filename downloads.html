@@ -12,8 +12,8 @@
 
 <!-- ===================================================================== -->
 <!-- RELEASE DATA. This is the only block to edit when you ship a release. -->
-<!-- Bump "version" and "date", update each platform's "size", and set     -->
-<!-- "state" to "ready" once an asset is actually uploaded and public.     -->
+<!-- Bump "version", update each platform's "size", and set "state" to     -->
+<!-- "ready" once an asset is actually uploaded and public.                -->
 <!--                                                                       -->
 <!-- state values:                                                         -->
 <!--   ready       a real file exists. Renders a download button.          -->
@@ -27,7 +27,6 @@
 <script>
 window.FINLEDGER_RELEASE = {
   version: "1.0.0",
-  date: "25 September 2026",
   notesUrl: "https://github.com/aaron777collins/finledger-site/releases/tag/v1.0.0",
   assetBase: "https://github.com/aaron777collins/finledger-site/releases/download/v1.0.0/",
   platforms: [
@@ -36,16 +35,16 @@ window.FINLEDGER_RELEASE = {
       state: "soon",
       kind: "DMG disk image",
       requires: "macOS 12 or later, Apple silicon and Intel",
-      status: "Coming shortly",
-      note: "The macOS disk image is not published yet. It is waiting on one signing step, and it goes up here as soon as that clears."
+      status: "Not ready yet",
+      note: "There is no macOS download yet. It goes up here when the disk image is ready to install."
     },
     {
       name: "Windows",
       state: "soon",
       kind: "MSIX package, x64",
       requires: "Windows 10 or later, x64",
-      status: "Built, not released",
-      note: "Windows now builds on the release machine, but the package is signed with a test certificate rather than a real one, so Windows would block the install and SmartScreen would warn. It is held back until the real certificate is in place."
+      status: "Not ready yet",
+      note: "Windows blocks this build. It is not signed with a certificate Windows trusts, so the installer will not run. A signed version goes up here when it is ready."
     },
     {
       name: "Linux",
@@ -102,7 +101,7 @@ window.FINLEDGER_RELEASE = {
 
     <div class="download-list" id="download-list">
       <noscript>
-        <p class="download-note">This list is built in your browser. With JavaScript off, get the files straight from the <a href="https://github.com/aaron777collins/finledger-site/releases/tag/v1.0.0">Finledger 1.0.0 release page</a>: <code>Finledger-1.0.0-x86_64.AppImage</code> for Linux and <code>Finledger-1.0.0.apk</code> for Android. macOS is coming shortly, the Windows package is built but not released yet, and iPhone is in internal testing.</p>
+        <p class="download-note">This list is built in your browser. With JavaScript off, get the files straight from the <a href="https://github.com/aaron777collins/finledger-site/releases/tag/v1.0.0">Finledger 1.0.0 release page</a>: <code>Finledger-1.0.0-x86_64.AppImage</code> for Linux and <code>Finledger-1.0.0.apk</code> for Android. macOS and Windows have no download yet, and iPhone is in internal testing.</p>
       </noscript>
     </div>
   </section>
@@ -134,8 +133,8 @@ window.FINLEDGER_RELEASE = {
 
   var line = document.getElementById('release-line');
   if (line) {
-    line.textContent = 'Finledger ' + data.version + ', released ' + data.date +
-      '. Linux and Android are live. The rest are listed as they really stand.';
+    line.textContent = 'Finledger ' + data.version +
+      '. Linux and Android are ready to download. The other three are not, and each row says why.';
   }
 
   function el(tag, cls, text) {
