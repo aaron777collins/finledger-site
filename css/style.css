@@ -521,9 +521,97 @@ section {
   border-radius: var(--r-button);
 }
 
+/* Downloads */
+
+.hero-actions {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--s16);
+  margin: 0;
+}
+
+.download-list {
+  max-width: var(--content-max);
+  margin: 0 auto;
+  border-top: 1px solid var(--hairline);
+}
+
+.download-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--s32);
+  padding: var(--s24) 0;
+  border-bottom: 1px solid var(--hairline);
+}
+
+.download-row-main {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.download-row h3 {
+  font-size: 19px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  margin: 0 0 var(--s8);
+}
+
+.download-meta {
+  color: var(--ink3);
+  font-size: 14px;
+  margin: 0 0 var(--s8);
+}
+
+.download-meta:last-child {
+  margin-bottom: 0;
+}
+
+.download-note {
+  color: var(--ink2);
+  font-size: 15px;
+  margin: var(--s12) 0 0;
+  max-width: 60ch;
+}
+
+.download-action {
+  flex: 0 0 auto;
+  text-align: right;
+}
+
+.download-filename {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 12px;
+  margin: var(--s8) 0 0;
+  word-break: break-all;
+}
+
+.download-status {
+  display: inline-block;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--ink2);
+  background: var(--sunk);
+  border: 1px solid var(--hairline);
+  border-radius: var(--r-chip);
+  padding: var(--s8) var(--s16);
+  white-space: nowrap;
+}
+
 /* Responsive */
 
 @media (max-width: 720px) {
+  .download-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--s16);
+  }
+
+  .download-action {
+    text-align: left;
+  }
+
   .hero {
     flex-direction: column;
     text-align: left;
@@ -551,6 +639,21 @@ section {
 
   .site-nav {
     gap: var(--s16);
+  }
+}
+
+/* Small phones: three nav items no longer fit beside the brand, so the nav
+   drops onto its own line instead of colliding with it. */
+@media (max-width: 480px) {
+  .site-header-inner {
+    flex-wrap: wrap;
+    row-gap: var(--s12);
+  }
+
+  .site-nav {
+    margin-left: 0;
+    width: 100%;
+    gap: var(--s20);
   }
 }
 
