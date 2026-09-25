@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Downloads | Finledger</title>
-<meta name="description" content="Download Finledger 1.0.0 for Linux and Android. The macOS, Windows and iPhone builds are listed with their real status.">
+<meta name="description" content="Download Finledger 1.0.0 for Linux and Android. The Windows package is test-signed and will not install. macOS and iPhone are listed with their real status.">
 <link rel="icon" type="image/png" sizes="32x32" href="icons/favicon-32.png">
 <link rel="icon" type="image/png" sizes="16x16" href="icons/favicon-16.png">
 <link rel="apple-touch-icon" sizes="180x180" href="icons/apple-touch-icon.png">
@@ -17,6 +17,9 @@
 <!--                                                                       -->
 <!-- state values:                                                         -->
 <!--   ready       a real file exists. Renders a download button.          -->
+<!--   advanced    a real file exists but most people cannot install it.   -->
+<!--               Renders a caution label and a quiet link, never a       -->
+<!--               primary button. Needs "caution" as well as "note".     -->
 <!--   soon        built but not published yet. No link.                   -->
 <!--   unavailable no build for this platform yet. No link.                -->
 <!--   testing     internal testing only. No link.                         -->
@@ -40,11 +43,13 @@ window.FINLEDGER_RELEASE = {
     },
     {
       name: "Windows",
-      state: "soon",
+      state: "advanced",
       kind: "MSIX package, x64",
       requires: "Windows 10 or later, x64",
-      status: "Not ready yet",
-      note: "Windows blocks this build. It is not signed with a certificate Windows trusts, so the installer will not run. A signed version goes up here when it is ready."
+      size: "118.3 MB",
+      file: "Finledger-{v}-x64.msix",
+      caution: "Will not install",
+      note: "Windows blocks this build. It is not signed with a certificate Windows trusts, so the installer will not run. The package is published for developers and testers who already know how to trust a test certificate. If that is not you, wait for the signed version, which goes up here when it is ready."
     },
     {
       name: "Linux",
@@ -101,7 +106,7 @@ window.FINLEDGER_RELEASE = {
 
     <div class="download-list" id="download-list">
       <noscript>
-        <p class="download-note">This list is built in your browser. With JavaScript off, get the files straight from the <a href="https://github.com/aaron777collins/finledger-site/releases/tag/v1.0.0">Finledger 1.0.0 release page</a>: <code>Finledger-1.0.0-x86_64.AppImage</code> for Linux and <code>Finledger-1.0.0.apk</code> for Android. macOS and Windows have no download yet, and iPhone is in internal testing.</p>
+        <p class="download-note">This list is built in your browser. With JavaScript off, get the files straight from the <a href="https://github.com/aaron777collins/finledger-site/releases/tag/v1.0.0">Finledger 1.0.0 release page</a>: <code>Finledger-1.0.0-x86_64.AppImage</code> for Linux and <code>Finledger-1.0.0.apk</code> for Android. <code>Finledger-1.0.0-x64.msix</code> is there for Windows, but it is signed with a test certificate, so Windows will refuse to install it. macOS has no download yet, and iPhone is in internal testing.</p>
       </noscript>
     </div>
   </section>
@@ -134,7 +139,8 @@ window.FINLEDGER_RELEASE = {
   var line = document.getElementById('release-line');
   if (line) {
     line.textContent = 'Finledger ' + data.version +
-      '. Linux and Android are ready to download. The other three are not, and each row says why.';
+      '. Linux and Android are ready to download. Windows has a package that Windows will not install yet. ' +
+      'macOS and iPhone have nothing to download.';
   }
 
   function el(tag, cls, text) {
@@ -145,13 +151,14 @@ window.FINLEDGER_RELEASE = {
   }
 
   data.platforms.forEach(function (p) {
+    var hasFile = (p.state === 'ready' || p.state === 'advanced') && !!p.file;
     var row = el('div', 'download-row');
 
     var main = el('div', 'download-row-main');
     main.appendChild(el('h3', null, p.name));
 
     var facts = [p.kind];
-    if (p.state === 'ready') {
+    if (hasFile) {
       if (p.size) { facts.push(p.size); }
       facts.push('version ' + data.version);
     }
@@ -161,19 +168,28 @@ window.FINLEDGER_RELEASE = {
       main.appendChild(el('p', 'download-meta', p.requires));
     }
     if (p.note) {
-      main.appendChild(el('p', 'download-note', p.note));
+      var noteCls = p.state === 'advanced' ? 'download-note download-note-caution' : 'download-note';
+      main.appendChild(el('p', noteCls, p.note));
     }
     row.appendChild(main);
 
     var action = el('div', 'download-action');
-    if (p.state === 'ready' && p.file) {
-      var href = data.assetBase + p.file.replace('{v}', data.version);
-      var a = el('a', 'button', 'Download for ' + p.name);
+    if (hasFile) {
+      var fileName = p.file.replace('{v}', data.version);
+      var href = data.assetBase + fileName;
+      var a;
+      if (p.state === 'advanced') {
+        action.appendChild(el('span', 'download-status status-advanced', p.caution || 'Will not install'));
+        a = el('a', 'link-quiet', 'Download anyway');
+        a.setAttribute('aria-label', 'Download ' + fileName + ' for ' + p.name + '. ' +
+          (p.caution || 'Will not install') + '.');
+      } else {
+        a = el('a', 'button', 'Download for ' + p.name);
+      }
       a.setAttribute('href', href);
       a.setAttribute('data-platform', p.name);
       action.appendChild(a);
-      var fname = el('p', 'download-meta download-filename', p.file.replace('{v}', data.version));
-      action.appendChild(fname);
+      action.appendChild(el('p', 'download-meta download-filename', fileName));
     } else {
       action.appendChild(el('span', 'download-status status-' + p.state, p.status || 'Not yet available'));
     }

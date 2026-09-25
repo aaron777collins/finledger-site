@@ -22,6 +22,7 @@
   --accent: #1348B3;
   --on-accent: #FFFFFF;
   --positive: #035D2F;
+  --negative: #9A211A;
   --hairline: #D0D0D7;
   --outline: #85858E;
 
@@ -60,6 +61,7 @@
     --accent: #85ADFF;
     --on-accent: #0B0B0D;
     --positive: #52D18E;
+    --negative: #FF8D83;
     --hairline: #36363D;
     --outline: #74747E;
     color-scheme: dark;
@@ -577,6 +579,9 @@ section {
 
 .download-action {
   flex: 0 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
   text-align: right;
 }
 
@@ -599,6 +604,37 @@ section {
   white-space: nowrap;
 }
 
+/* A platform whose file exists but will not install for most people.
+   Deliberately quieter than .button: nobody should mistake it for a
+   download that just works. */
+
+.download-status.status-advanced {
+  color: var(--negative);
+  background: transparent;
+  border-color: var(--negative);
+}
+
+.link-quiet {
+  display: inline-block;
+  color: var(--ink2);
+  font-size: 14px;
+  font-weight: 500;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  margin-top: var(--s12);
+}
+
+.link-quiet:hover,
+.link-quiet:focus-visible {
+  color: var(--ink);
+}
+
+.download-note-caution {
+  color: var(--ink);
+  border-left: 3px solid var(--negative);
+  padding-left: var(--s12);
+}
+
 /* Responsive */
 
 @media (max-width: 720px) {
@@ -609,6 +645,7 @@ section {
   }
 
   .download-action {
+    align-items: flex-start;
     text-align: left;
   }
 
