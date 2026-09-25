@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Downloads | Finledger</title>
-<meta name="description" content="Download Finledger 1.0.0 for Linux and Android. The Windows package is test-signed and will not install. macOS and iPhone are listed with their real status.">
+<meta name="description" content="Download Finledger 1.0.0 for macOS, Linux and Android. The Windows package is test-signed and will not install. iPhone is in internal testing.">
 <link rel="icon" type="image/png" sizes="32x32" href="icons/favicon-32.png">
 <link rel="icon" type="image/png" sizes="16x16" href="icons/favicon-16.png">
 <link rel="apple-touch-icon" sizes="180x180" href="icons/apple-touch-icon.png">
@@ -35,11 +35,12 @@ window.FINLEDGER_RELEASE = {
   platforms: [
     {
       name: "macOS",
-      state: "soon",
+      state: "ready",
       kind: "DMG disk image",
       requires: "macOS 12 or later, Apple silicon and Intel",
-      status: "Not ready yet",
-      note: "There is no macOS download yet. It goes up here when the disk image is ready to install."
+      size: "48.0 MB",
+      file: "Finledger-{v}.dmg",
+      note: "Open the disk image and drag Finledger to your Applications folder."
     },
     {
       name: "Windows",
@@ -106,7 +107,7 @@ window.FINLEDGER_RELEASE = {
 
     <div class="download-list" id="download-list">
       <noscript>
-        <p class="download-note">This list is built in your browser. With JavaScript off, get the files straight from the <a href="https://github.com/aaron777collins/finledger-site/releases/tag/v1.0.0">Finledger 1.0.0 release page</a>: <code>Finledger-1.0.0-x86_64.AppImage</code> for Linux and <code>Finledger-1.0.0.apk</code> for Android. <code>Finledger-1.0.0-x64.msix</code> is there for Windows, but it is signed with a test certificate, so Windows will refuse to install it. macOS has no download yet, and iPhone is in internal testing.</p>
+        <p class="download-note">This list is built in your browser. With JavaScript off, get the files straight from the <a href="https://github.com/aaron777collins/finledger-site/releases/tag/v1.0.0">Finledger 1.0.0 release page</a>: <code>Finledger-1.0.0.dmg</code> for macOS, <code>Finledger-1.0.0-x86_64.AppImage</code> for Linux and <code>Finledger-1.0.0.apk</code> for Android. <code>Finledger-1.0.0-x64.msix</code> is there for Windows, but it is signed with a test certificate, so Windows will refuse to install it. iPhone is in internal testing.</p>
       </noscript>
     </div>
   </section>
@@ -139,8 +140,8 @@ window.FINLEDGER_RELEASE = {
   var line = document.getElementById('release-line');
   if (line) {
     line.textContent = 'Finledger ' + data.version +
-      '. Linux and Android are ready to download. Windows has a package that Windows will not install yet. ' +
-      'macOS and iPhone have nothing to download.';
+      '. macOS, Linux and Android are ready to download. Windows has a package that Windows will not install yet. ' +
+      'iPhone is in internal testing.';
   }
 
   function el(tag, cls, text) {
