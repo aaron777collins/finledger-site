@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="referrer" content="no-referrer">
+<meta name="robots" content="noindex">
+<title>Finledger sign-in</title>
+<!--
+  Why this page exists (fl-t5.3): CloudKit's Production environment will not
+  register a localhost sign-in redirect, only https:// or the app's custom
+  scheme. Finledger on Windows and Linux listens for the sign-in result on
+  http://localhost:38217/callback. Apple sends the browser here after the
+  Apple ID sign-in, and this page hands the same query string straight to
+  the app's local listener. Nothing is stored, logged or sent anywhere else.
+-->
+<script>
+  (function () {
+    var target = 'http://localhost:38217/callback' + window.location.search;
+    // Take the token out of this page's own history entry before leaving.
+    try { history.replaceState(null, '', window.location.pathname); } catch (e) {}
+    window.location.replace(target);
+  })();
+</script>
+<style>
+  :root { color-scheme: light dark; }
+  body { margin: 0; font: 16px/1.5 -apple-system, "Segoe UI", system-ui, sans-serif;
+         display: grid; place-items: center; min-height: 100vh; padding: 16px; box-sizing: border-box; }
+</style>
+</head>
+<body>
+  <p>Returning you to Finledger. If nothing happens, go back to the app and try signing in again.</p>
+</body>
+</html>
