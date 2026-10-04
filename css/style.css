@@ -551,6 +551,7 @@ section {
 .download-row-main {
   flex: 1 1 auto;
   min-width: 0;
+  max-width: 100%;
 }
 
 .download-row h3 {
@@ -604,7 +605,7 @@ section {
   white-space: nowrap;
 }
 
-/* A platform whose file exists but will not install for most people.
+/* A platform that needs an extra step.
    Deliberately quieter than .button: nobody should mistake it for a
    download that just works. */
 
@@ -633,6 +634,48 @@ section {
   color: var(--ink);
   border-left: 3px solid var(--negative);
   padding-left: var(--s12);
+}
+
+/* Install steps (Windows msixrun). Code scrolls inside its own box so a long
+   command never widens the page. */
+
+.install-steps {
+  margin: var(--s16) 0 0;
+  max-width: 60ch;
+}
+
+.install-steps h4 {
+  font-size: 16px;
+  margin: 0 0 var(--s8);
+}
+
+.install-steps-list {
+  color: var(--ink2);
+  font-size: 15px;
+  margin: 0 0 var(--s12);
+  padding-left: var(--s24);
+}
+
+.install-steps-list li {
+  margin: 0 0 var(--s12);
+}
+
+.code-block {
+  background: var(--sunk);
+  border: 1px solid var(--hairline);
+  border-radius: var(--r-input);
+  color: var(--ink);
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 13px;
+  margin: var(--s8) 0 0;
+  max-width: 100%;
+  overflow-x: auto;
+  padding: var(--s12) var(--s16);
+  user-select: all;
+}
+
+.code-block code {
+  white-space: pre;
 }
 
 /* Responsive */
