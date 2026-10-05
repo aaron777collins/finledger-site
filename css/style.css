@@ -678,6 +678,56 @@ section {
   white-space: pre;
 }
 
+/* Previous versions: one row per per-build release. */
+
+.build-list {
+  max-width: var(--content-max);
+  margin: 0 auto;
+  border-top: 1px solid var(--hairline);
+}
+
+.build-row {
+  padding: var(--s16) 0;
+  border-bottom: 1px solid var(--hairline);
+}
+
+.build-row-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: var(--s8) var(--s16);
+}
+
+.build-row h3 {
+  font-size: 17px;
+  font-weight: 600;
+  margin: 0;
+}
+
+.build-row .download-meta {
+  margin: 0;
+}
+
+.build-files {
+  list-style: none;
+  margin: var(--s8) 0 0;
+  padding: 0;
+}
+
+.build-files li {
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+
+.build-files .link-quiet {
+  margin-top: var(--s8);
+}
+
+#build-status {
+  margin: var(--s16) 0;
+}
+
 /* Responsive */
 
 @media (max-width: 720px) {

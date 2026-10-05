@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Downloads | Finledger</title>
-<meta name="description" content="Download Finledger 1.0.0 for macOS, Linux and Android. Windows installs with one PowerShell line that trusts the Finledger certificate once. iPhone is in internal testing.">
+<meta name="description" content="Download Finledger 1.0.0 for macOS, Linux and Android. Windows installs with one PowerShell line that trusts the Finledger certificate once. iPhone has a public TestFlight beta.">
 <link rel="icon" type="image/png" sizes="32x32" href="icons/favicon-32.png">
 <link rel="icon" type="image/png" sizes="16x16" href="icons/favicon-16.png">
 <link rel="apple-touch-icon" sizes="180x180" href="icons/apple-touch-icon.png">
@@ -22,7 +22,8 @@
 <!--               primary button. Needs "caution" as well as "note".     -->
 <!--   soon        built but not published yet. No link.                   -->
 <!--   unavailable no build for this platform yet. No link.                -->
-<!--   testing     internal testing only. No link.                         -->
+<!--   testing     in testing. No file. An optional "joinUrl" adds a       -->
+<!--               public TestFlight link, shown as a button.              -->
 <!--                                                                       -->
 <!-- {v} in a file name is replaced with "version".                        -->
 <!-- Steps to publish: workbench/RELEASE-DOWNLOADS.md                      -->
@@ -84,8 +85,10 @@ window.FINLEDGER_RELEASE = {
       state: "testing",
       kind: "iOS build",
       requires: "iOS 15 or later",
-      status: "In App Review",
-      note: "Version 1.0 is with Apple for App Store review. Email contact@aaroncollins.info if you want to be told when it is live."
+      status: "In testing",
+      joinUrl: "https://testflight.apple.com/join/qCmtX2Mu",
+      joinText: "Join the iPhone beta",
+      note: "The iPhone beta runs through Apple TestFlight. Install the free TestFlight app, then open the link to join. The App Store release is with Apple for review."
     }
   ]
 };
@@ -116,7 +119,20 @@ window.FINLEDGER_RELEASE = {
 
     <div class="download-list" id="download-list">
       <noscript>
-        <p class="download-note">This list is built in your browser. With JavaScript off, get the files straight from the <a href="https://github.com/aaron777collins/finledger-site/releases/tag/v1.0.0">Finledger 1.0.0 release page</a>: <code>Finledger-1.0.0.dmg</code> for macOS, <code>Finledger-1.0.0-x86_64.AppImage</code> for Linux and <code>Finledger-1.0.0.apk</code> for Android. <code>Finledger-1.0.0-x64.msix</code> is there for Windows, with <a href="Finledger-signing.cer">Finledger-signing.cer</a>. Install it with the one-line PowerShell command on this page, or trust the certificate by hand and double-click the package. iPhone is in App Store review.</p>
+        <p class="download-note">This list is built in your browser. With JavaScript off, get the files straight from the <a href="https://github.com/aaron777collins/finledger-site/releases/tag/v1.0.0">Finledger 1.0.0 release page</a>: <code>Finledger-1.0.0.dmg</code> for macOS, <code>Finledger-1.0.0-x86_64.AppImage</code> for Linux and <code>Finledger-1.0.0.apk</code> for Android. <code>Finledger-1.0.0-x64.msix</code> is there for Windows, with <a href="Finledger-signing.cer">Finledger-signing.cer</a>. Install it with the one-line PowerShell command on this page, or trust the certificate by hand and double-click the package. iPhone: join the TestFlight beta at <a href="https://testflight.apple.com/join/qCmtX2Mu">testflight.apple.com/join/qCmtX2Mu</a>.</p>
+      </noscript>
+    </div>
+  </section>
+
+  <section aria-labelledby="previous-heading" id="previous-versions">
+    <div class="section-head">
+      <h2 id="previous-heading">Previous versions</h2>
+      <p>Every build stays here for a while, newest first. The latest 20 are kept.</p>
+    </div>
+    <div class="build-list" id="build-list" aria-live="polite">
+      <p class="download-note" id="build-status" role="status">Loading previous versions.</p>
+      <noscript>
+        <p class="download-note">This list is built in your browser. With JavaScript off, see every build on the <a href="https://github.com/aaron777collins/finledger-site/releases">Finledger releases page</a>.</p>
       </noscript>
     </div>
   </section>
@@ -150,7 +166,7 @@ window.FINLEDGER_RELEASE = {
   if (line) {
     line.textContent = 'Finledger ' + data.version +
       '. macOS, Linux and Android are ready to download. Windows: one PowerShell line installs it. ' +
-      'iPhone is in internal testing.';
+      'iPhone: join the TestFlight beta.';
   }
 
   function el(tag, cls, text) {
@@ -230,11 +246,92 @@ window.FINLEDGER_RELEASE = {
       action.appendChild(el('p', 'download-meta download-filename', fileName));
     } else {
       action.appendChild(el('span', 'download-status status-' + p.state, p.status || 'Not yet available'));
+      if (p.joinUrl) {
+        var j = el('a', 'button', p.joinText || 'Join the beta');
+        j.setAttribute('href', p.joinUrl);
+        j.setAttribute('data-platform', p.name);
+        j.style.marginTop = '12px';
+        action.appendChild(j);
+      }
     }
     row.appendChild(action);
 
     list.appendChild(row);
   });
+
+  // ---- Previous versions: per-build releases, read from the public GitHub API.
+  var RELEASES_URL = 'https://github.com/aaron777collins/finledger-site/releases';
+  var API_URL = 'https://api.github.com/repos/aaron777collins/finledger-site/releases?per_page=100';
+  var buildList = document.getElementById('build-list');
+  var buildStatus = document.getElementById('build-status');
+
+  function sizeText(bytes) {
+    return (Math.round(bytes / 100000) / 10).toFixed(1) + ' MB';
+  }
+
+  function showBuildError() {
+    if (!buildStatus) { return; }
+    buildStatus.textContent = 'Could not load the list of previous versions. ';
+    var a = el('a', 'link-quiet', 'See every build on the releases page');
+    a.setAttribute('href', RELEASES_URL);
+    buildStatus.appendChild(a);
+    buildStatus.appendChild(document.createTextNode('.'));
+  }
+
+  function renderBuilds(releases) {
+    var rx = /^v(\d+\.\d+\.\d+)\+(\d+)$/;
+    var rows = [];
+    releases.forEach(function (r) {
+      var m = rx.exec(r.tag_name || '');
+      if (!m || r.draft || r.prerelease) { return; }
+      rows.push({ rel: r, version: m[1], build: parseInt(m[2], 10), buildText: m[2] });
+    });
+    rows.sort(function (a, b) { return b.build - a.build; });
+    if (!rows.length) {
+      buildStatus.textContent = 'No previous versions yet. The newest build is in the list above.';
+      return;
+    }
+    buildStatus.parentNode.removeChild(buildStatus);
+    rows.forEach(function (row) {
+      var item = el('div', 'build-row');
+      var head = el('div', 'build-row-head');
+      head.appendChild(el('h3', null, 'Version ' + row.version + ', build ' + row.buildText));
+      var when = row.rel.published_at ? new Date(row.rel.published_at) : null;
+      if (when && !isNaN(when.getTime())) {
+        var t = el('time', 'download-meta', when.toISOString().slice(0, 10));
+        t.setAttribute('datetime', when.toISOString());
+        head.appendChild(t);
+      }
+      item.appendChild(head);
+      var files = el('ul', 'build-files');
+      (row.rel.assets || []).forEach(function (a) {
+        if (!/\.(dmg|apk|AppImage|msix)$/.test(a.name)) { return; }
+        var li = el('li', null, null);
+        var link = el('a', 'link-quiet', a.name);
+        link.setAttribute('href', a.browser_download_url);
+        li.appendChild(link);
+        li.appendChild(el('span', 'download-meta', ' ' + sizeText(a.size)));
+        files.appendChild(li);
+      });
+      item.appendChild(files);
+      var rl = el('a', 'link-quiet', 'Release page');
+      rl.setAttribute('href', row.rel.html_url);
+      item.appendChild(rl);
+      buildList.appendChild(item);
+    });
+  }
+
+  if (buildList && buildStatus && window.fetch) {
+    fetch(API_URL, { headers: { 'Accept': 'application/vnd.github+json' } })
+      .then(function (res) {
+        if (!res.ok) { throw new Error('HTTP ' + res.status); }
+        return res.json();
+      })
+      .then(renderBuilds)
+      .catch(showBuildError);
+  } else if (buildStatus) {
+    showBuildError();
+  }
 
   var all = document.getElementById('all-releases-link');
   if (all && data.notesUrl) { all.setAttribute('href', data.notesUrl); }
