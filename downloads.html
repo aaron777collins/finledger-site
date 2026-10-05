@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Downloads | Finledger</title>
-<meta name="description" content="Download Finledger 1.0.0 for macOS, Linux and Android. Windows installs with one PowerShell line that trusts the Finledger certificate once. iPhone has a public TestFlight beta.">
+<meta name="description" content="Download Finledger 1.0.0 for macOS, Linux and Android. Windows installs with one PowerShell line using msixrun, which trusts the Finledger publisher once. iPhone has a public TestFlight beta.">
 <link rel="icon" type="image/png" sizes="32x32" href="icons/favicon-32.png">
 <link rel="icon" type="image/png" sizes="16x16" href="icons/favicon-16.png">
 <link rel="apple-touch-icon" sizes="180x180" href="icons/apple-touch-icon.png">
@@ -50,16 +50,17 @@ window.FINLEDGER_RELEASE = {
       requires: "Windows 10 or later, x64",
       size: "119.6 MB",
       file: "Finledger-{v}-x64.msix",
-      caution: "Trusts our certificate once",
-      note: "Windows does not know our publisher yet, so the first install asks you to trust the Finledger certificate once. The easiest way is one PowerShell line that does it for you.",
+      caution: "Trusts our publisher once",
+      note: "Windows does not know our publisher yet, so the first install asks you to trust Finledger once. msixrun, a small open-source installer, does that for you with one PowerShell line.",
       stepsTitle: "Install on Windows",
       steps: [
-        { text: "Easiest: open PowerShell (press the Windows key, type PowerShell, press Enter) and paste this one line. It runs msixrun, a small free tool, straight from its download link:", code: "& ([scriptblock]::Create((irm https://raw.githubusercontent.com/aaron777collins/msixrun/main/msixrun.ps1))) {url}" },
-        { text: "What happens: it downloads Finledger, asks once whether to trust the Finledger certificate, then Windows asks for admin permission once. Finledger then installs and opens. Check that the SHA-1 thumbprint msixrun shows matches this one before you say yes:", code: "9586F968547EC2CD26E89A32A165315D2D31E04A\n(with colons: 95:86:F9:68:54:7E:C2:CD:26:E8:9A:32:A1:65:31:5D:2D:31:E0:4A)" },
-        { text: "Prefer Git Bash? Install Git for Windows, open Git Bash, install msixrun, then run it on the package link:", code: "curl -fsSL https://raw.githubusercontent.com/aaron777collins/msixrun/main/install.sh | bash\nmsixrun {url}" },
-        { text: "Or do it by hand. First download the certificate with the link just below this text. Then open PowerShell as administrator (right-click Start, then choose Terminal (Admin) or Windows PowerShell (Admin)) and run the line below. If your browser saved it somewhere else, change the path in the command. Last, download the Finledger package with the Download link in the Windows row, next to these steps on a wide screen and under them on a narrow one, and double-click it.", link: { href: "Finledger-signing.cer", text: "Finledger-signing.cer" }, code: "Import-Certificate -FilePath \"$env:USERPROFILE\\Downloads\\Finledger-signing.cer\" -CertStoreLocation Cert:\\LocalMachine\\TrustedPeople" }
+        { text: "Open PowerShell (press the Windows key, type PowerShell, press Enter) and paste this one line. It fetches msixrun, and msixrun downloads Finledger, installs it and opens it:", code: "& ([scriptblock]::Create((irm https://raw.githubusercontent.com/aaron777collins/msixrun/main/msixrun.ps1))) {url}" },
+        { text: "Windows will ask two things, once each. First msixrun shows the publisher, CN=Finledger, and asks whether to trust it. Check that the thumbprint it shows is 9586F968547EC2CD26E89A32A165315D2D31E04A, then type y and press Enter. Then Windows shows one permission prompt. Approve it, and Finledger installs and opens." },
+        { text: "Prefer to download the files first? Save the Finledger package with the Download link in the Windows row, and save the installer script into the same folder (right-click the link, then choose Save link as):", link: { href: "https://raw.githubusercontent.com/aaron777collins/msixrun/main/msixrun.ps1", text: "msixrun.ps1" } },
+        { text: "Open PowerShell in that folder and run:", code: ".\\msixrun.ps1 Finledger-{v}-x64.msix" },
+        { text: "If PowerShell says running scripts is disabled on this system, run this instead. It allows the script for this one window only and changes no setting:", code: "powershell -ExecutionPolicy Bypass -File .\\msixrun.ps1 Finledger-{v}-x64.msix" }
       ],
-      stepsAfter: "msixrun is a small free tool that installs and launches an MSIX from the command line. Trusting the certificate means Windows accepts apps signed with it, and only Finledger's build server holds the key that signs them. The trust applies to this PC only, and you can undo it in certlm.msc under Trusted People. If Windows reports a conflict with an earlier Finledger test build, msixrun offers to remove that build first.",
+      stepsAfter: "msixrun is a small open-source installer for MSIX packages, written by the author of Finledger. It trusts only the publisher you are shown, on this PC only, and you can undo it in certlm.msc under Trusted People. Finledger is signed by its own build server, not by a company Windows already knows. If Windows reports a conflict with an earlier Finledger test build, msixrun offers to remove that build first.",
       stepsLink: { href: "https://github.com/aaron777collins/msixrun", text: "msixrun on GitHub" }
     },
     {
@@ -119,7 +120,7 @@ window.FINLEDGER_RELEASE = {
 
     <div class="download-list" id="download-list">
       <noscript>
-        <p class="download-note">This list is built in your browser. With JavaScript off, get the files straight from the <a href="https://github.com/aaron777collins/finledger-site/releases/tag/v1.0.0">Finledger 1.0.0 release page</a>: <code>Finledger-1.0.0.dmg</code> for macOS, <code>Finledger-1.0.0-x86_64.AppImage</code> for Linux and <code>Finledger-1.0.0.apk</code> for Android. <code>Finledger-1.0.0-x64.msix</code> is there for Windows, with <a href="Finledger-signing.cer">Finledger-signing.cer</a>. Install it with the one-line PowerShell command on this page, or trust the certificate by hand and double-click the package. iPhone: join the TestFlight beta at <a href="https://testflight.apple.com/join/qCmtX2Mu">testflight.apple.com/join/qCmtX2Mu</a>.</p>
+        <p class="download-note">This list is built in your browser. With JavaScript off, get the files straight from the <a href="https://github.com/aaron777collins/finledger-site/releases/tag/v1.0.0">Finledger 1.0.0 release page</a>: <code>Finledger-1.0.0.dmg</code> for macOS, <code>Finledger-1.0.0-x86_64.AppImage</code> for Linux and <code>Finledger-1.0.0.apk</code> for Android. <code>Finledger-1.0.0-x64.msix</code> is there for Windows. Install it with the one-line PowerShell command on this page, which uses <a href="https://github.com/aaron777collins/msixrun">msixrun</a>. iPhone: join the TestFlight beta at <a href="https://testflight.apple.com/join/qCmtX2Mu">testflight.apple.com/join/qCmtX2Mu</a>.</p>
       </noscript>
     </div>
   </section>
