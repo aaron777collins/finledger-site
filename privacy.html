@@ -29,7 +29,7 @@
 <main id="main">
   <article class="doc">
     <h1>Privacy policy</h1>
-    <p class="updated">Last updated 19 September 2026.</p>
+    <p class="updated">Last updated 5 October 2026.</p>
 
     <p>Finledger does not collect your data. There is no Finledger account, no Finledger server, and no analytics. Your transactions, budgets, goals and notes are stored on your own device, and nothing about them is sent to us, because there is nowhere for it to be sent.</p>
 
@@ -38,10 +38,12 @@
     <p>You can export it all as CSV at any time from Settings &gt; Data, and you can delete all of it from the same screen.</p>
 
     <h2>When something does leave your device</h2>
-    <p>Three things, and you control each one.</p>
+    <p>Four things, and you control each one.</p>
     <p><strong>iCloud sync, if you turn it on.</strong> Your data syncs through your own iCloud account, between your own devices. It is encrypted on your device before it is sent, with a key held in your device's keychain. Apple stores the encrypted records; Apple's privacy policy covers that storage. We cannot read your data and neither can Apple. If you lose every device and your recovery key, nobody can recover it.</p>
     <p><strong>Downloading an AI model.</strong> The on-device analyst needs a model file, which is downloaded from huggingface.co when you ask for it. That request tells Hugging Face which file you are downloading and your IP address, like any other download. It contains nothing about your money.</p>
     <p><strong>A cloud AI endpoint, if you set one up.</strong> By default the analyst runs entirely on your device and nothing you ask it leaves. If you choose to point it at a cloud service instead, the screen before you confirm says exactly what would be sent, and you decide the scope. That service's own policy then applies to what you send it. This is off unless you turn it on.</p>
+
+    <p><strong>Checking for updates, in direct downloads only.</strong> The copies you download from this site (Windows, Mac, Linux and Android) look about once a day for a newer version by fetching one small public file from github.com. That request carries no account, no device or app identifier and nothing about your money. GitHub sees your IP address and the time, like any other web request. If a newer version exists, Finledger downloads it only when you tap Update. You can turn the daily check off in Settings &gt; About, and you can still check by hand there. The App Store version for iPhone and iPad never checks: Apple handles its updates.</p>
 
     <h2>What we never do</h2>
     <p>We do not sell your data, share it, profile you, show ads, or use your financial information to train any model. No third-party analytics or crash-reporting SDK is built into the app.</p>
