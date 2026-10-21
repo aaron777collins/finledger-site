@@ -678,6 +678,31 @@ section {
   white-space: pre;
 }
 
+/* A collapsed "Other ways to install" note under a platform's main download. */
+
+.install-other {
+  margin: var(--s16) 0 0;
+  max-width: 60ch;
+}
+
+.install-other summary {
+  color: var(--ink2);
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.install-other summary:hover,
+.install-other summary:focus-visible {
+  color: var(--ink);
+}
+
+.install-other[open] summary {
+  margin-bottom: var(--s8);
+}
+
 /* Previous versions: one row per per-build release. */
 
 .build-list {

@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Downloads | Finledger</title>
-<meta name="description" content="Download Finledger 1.0.0 for macOS, Linux and Android. Windows installs with one PowerShell line using msixrun, which trusts the Finledger publisher once. iPhone has a public TestFlight beta.">
+<meta name="description" content="Download Finledger 1.0.0 for macOS, Windows, Linux and Android. The Windows installer needs no administrator rights. iPhone has a public TestFlight beta.">
 <link rel="icon" type="image/png" sizes="32x32" href="icons/favicon-32.png">
 <link rel="icon" type="image/png" sizes="16x16" href="icons/favicon-16.png">
 <link rel="apple-touch-icon" sizes="180x180" href="icons/apple-touch-icon.png">
@@ -24,6 +24,9 @@
 <!--   unavailable no build for this platform yet. No link.                -->
 <!--   testing     in testing. No file. An optional "joinUrl" adds a       -->
 <!--               public TestFlight link, shown as a button.              -->
+<!--                                                                       -->
+<!-- Optional "other" on a platform: a collapsed "Other ways to install"    -->
+<!-- note with its own file, steps, stepsAfter and stepsLink.              -->
 <!--                                                                       -->
 <!-- {v} in a file name is replaced with "version".                        -->
 <!-- Steps to publish: workbench/RELEASE-DOWNLOADS.md                      -->
@@ -45,22 +48,27 @@ window.FINLEDGER_RELEASE = {
     },
     {
       name: "Windows",
-      state: "advanced",
-      kind: "MSIX package, x64",
-      requires: "Windows 10 or later, x64",
-      size: "120.1 MB",
-      file: "Finledger-{v}-x64.msix",
-      caution: "Trusts our publisher once",
-      note: "Windows does not know our publisher yet, so the first install asks you to trust Finledger once. msixrun, a small open-source installer, does that for you with one PowerShell line.",
-      stepsTitle: "Install on Windows",
-      steps: [
-        { text: "Open PowerShell: click Start, type PowerShell, and open Windows PowerShell. Do not use Command Prompt, because this command does not work there. Paste this one line. It fetches msixrun, and msixrun downloads Finledger, installs it and opens it:", code: "& ([scriptblock]::Create((irm https://raw.githubusercontent.com/aaron777collins/msixrun/main/msixrun.ps1))) {url}" },
-        { text: "You may first see a red message saying the publisher is not trusted. That is expected: msixrun then shows the publisher CN=Finledger and its thumbprint and asks to trust it. Type y. Windows will ask two things, once each. First msixrun shows the publisher, CN=Finledger, and asks whether to trust it. Check that the thumbprint it shows is 9586F968547EC2CD26E89A32A165315D2D31E04A, then type y and press Enter. Then Windows shows one permission prompt. Approve it, and Finledger installs and opens." },
-        { text: "Prefer to download the files first? Save the Finledger package with the Download link in the Windows row, and save the installer script into the same folder (right-click the link, then choose Save link as):", link: { href: "https://raw.githubusercontent.com/aaron777collins/msixrun/main/msixrun.ps1", text: "msixrun.ps1" } },
-        { text: "Open PowerShell in that folder and run this. It allows the script for this one run only and changes no setting:", code: "powershell -ExecutionPolicy Bypass -File .\\msixrun.ps1 Finledger-{v}-x64.msix" }
-      ],
-      stepsAfter: "msixrun is a small open-source installer for MSIX packages, written by the author of Finledger. It trusts only the publisher you are shown, on this PC only, and you can undo it in certlm.msc under Trusted People. Finledger is signed by its own build server, not by a company Windows already knows. If Windows reports a conflict with an earlier Finledger test build, msixrun offers to remove that build first.",
-      stepsLink: { href: "https://github.com/aaron777collins/msixrun", text: "msixrun on GitHub" }
+      state: "ready",
+      kind: "Installer, x64",
+      requires: "Windows 10 or later, x64. Installs for you only, no administrator rights.",
+      size: "79.3 MB",
+      file: "Finledger-{v}-x64-setup.exe",
+      note: "Windows may show \u201cWindows protected your PC\u201d the first time, because Finledger is not signed yet. Click More info, then Run anyway. On a new Windows 11 PC with Smart App Control turned on, Windows blocks apps that are not signed and offers no Run anyway, so Finledger cannot be installed there yet.",
+      other: {
+        title: "Other ways to install",
+        text: "Already installed Finledger as the package (MSIX) version? Open Finledger and use Settings, About, Check for updates. You can also install the package by hand: it needs one PowerShell line using msixrun, which trusts the Finledger publisher once and asks for administrator permission.",
+        file: "Finledger-{v}-x64.msix",
+        size: "120.2 MB",
+        stepsTitle: "Install the package with msixrun",
+        steps: [
+          { text: "Open PowerShell: click Start, type PowerShell, and open Windows PowerShell. Do not use Command Prompt, because this command does not work there. Paste this one line. It fetches msixrun, and msixrun downloads Finledger, installs it and opens it:", code: "& ([scriptblock]::Create((irm https://raw.githubusercontent.com/aaron777collins/msixrun/main/msixrun.ps1))) {url}" },
+          { text: "You may first see a red message saying the publisher is not trusted. That is expected: msixrun then shows the publisher CN=Finledger and its thumbprint and asks to trust it. Check that the thumbprint it shows is 9586F968547EC2CD26E89A32A165315D2D31E04A, then type y and press Enter. Then Windows shows one permission prompt. Approve it, and Finledger installs and opens." },
+          { text: "Prefer to download the files first? Save the package with the link above, and save the installer script into the same folder (right-click the link, then choose Save link as):", link: { href: "https://raw.githubusercontent.com/aaron777collins/msixrun/main/msixrun.ps1", text: "msixrun.ps1" } },
+          { text: "Open PowerShell in that folder and run this. It allows the script for this one run only and changes no setting:", code: "powershell -ExecutionPolicy Bypass -File .\\msixrun.ps1 Finledger-{v}-x64.msix" }
+        ],
+        stepsAfter: "msixrun is a small open-source installer for MSIX packages, written by the author of Finledger. It trusts only the publisher you are shown, on this PC only, and you can undo it in certlm.msc under Trusted People. If you later run the installer above, it moves your data across and removes the package version for you.",
+        stepsLink: { href: "https://github.com/aaron777collins/msixrun", text: "msixrun on GitHub" }
+      }
     },
     {
       name: "Linux",
@@ -76,7 +84,7 @@ window.FINLEDGER_RELEASE = {
       state: "ready",
       kind: "APK",
       requires: "Android 8.0 or later",
-      size: "105.2 MB",
+      size: "105.4 MB",
       file: "Finledger-{v}.apk",
       note: "Android asks you to allow installs from your browser the first time. The app is signed with the Finledger key."
     },
@@ -119,7 +127,7 @@ window.FINLEDGER_RELEASE = {
 
     <div class="download-list" id="download-list">
       <noscript>
-        <p class="download-note">This list is built in your browser. With JavaScript off, get the files straight from the <a href="https://github.com/aaron777collins/finledger-site/releases/tag/v1.0.0">Finledger 1.0.0 release page</a>: <code>Finledger-1.0.0.dmg</code> for macOS, <code>Finledger-1.0.0-x86_64.AppImage</code> for Linux and <code>Finledger-1.0.0.apk</code> for Android. <code>Finledger-1.0.0-x64.msix</code> is there for Windows. Install it with the one-line PowerShell command on this page, which uses <a href="https://github.com/aaron777collins/msixrun">msixrun</a>. iPhone: join the TestFlight beta at <a href="https://testflight.apple.com/join/qCmtX2Mu">testflight.apple.com/join/qCmtX2Mu</a>.</p>
+        <p class="download-note">This list is built in your browser. With JavaScript off, get the files straight from the <a href="https://github.com/aaron777collins/finledger-site/releases/tag/v1.0.0">Finledger 1.0.0 release page</a>: <code>Finledger-1.0.0.dmg</code> for macOS, <code>Finledger-1.0.0-x86_64.AppImage</code> for Linux and <code>Finledger-1.0.0.apk</code> for Android. <code>Finledger-1.0.0-x64-setup.exe</code> is the installer for Windows. Windows may show &ldquo;Windows protected your PC&rdquo; the first time, because Finledger is not signed yet: click More info, then Run anyway. On a new Windows 11 PC with Smart App Control turned on, Windows blocks it and offers no Run anyway. The package version, <code>Finledger-1.0.0-x64.msix</code>, is also there; it installs with <a href="https://github.com/aaron777collins/msixrun">msixrun</a>. iPhone: join the TestFlight beta at <a href="https://testflight.apple.com/join/qCmtX2Mu">testflight.apple.com/join/qCmtX2Mu</a>.</p>
       </noscript>
     </div>
   </section>
@@ -140,7 +148,7 @@ window.FINLEDGER_RELEASE = {
   <div class="band">
     <div class="band-inner">
       <h2>Before you install</h2>
-      <p>Finledger keeps your money data on your device. There is no account to create, so the ledger works as soon as you open it: import a CSV or add a transaction. The AI assistant is optional and needs a one-time model download inside the app, about 2.6 GB on phones and 3.7 GB on computers.</p>
+      <p>Finledger keeps your money data on your device. There is no account to create, so the ledger works as soon as you open it: import a CSV or add a transaction. The AI assistant is optional and needs a one-time model download inside the app, about 2.6 GB on phones and on computers with less than 16 GB of memory, and 3.7 GB on computers with 16 GB or more.</p>
       <p>Every build here is the same code on every platform. Release notes live on the <a href="https://github.com/aaron777collins/finledger-site/releases" id="all-releases-link">releases page</a>. If something goes wrong, <a href="support.html">support</a> tells you how to report it.</p>
     </div>
   </div>
@@ -165,7 +173,7 @@ window.FINLEDGER_RELEASE = {
   var line = document.getElementById('release-line');
   if (line) {
     line.textContent = 'Finledger ' + data.version +
-      '. macOS, Linux and Android are ready to download. Windows: one PowerShell line installs it. ' +
+      '. macOS, Windows, Linux and Android are ready to download. ' +
       'iPhone: join the TestFlight beta.';
   }
 
@@ -174,6 +182,55 @@ window.FINLEDGER_RELEASE = {
     if (cls) { node.className = cls; }
     if (text) { node.textContent = text; }
     return node;
+  }
+
+  // The numbered install steps for a platform, or for its "other" block. {v} and {url}
+  // are filled in; {url} is the download address of the file the block belongs to.
+  function renderSteps(spec, owner) {
+    var box = el('div', 'install-steps');
+    box.appendChild(el('h4', null, spec.stepsTitle || 'How to install'));
+    var ol = el('ol', 'install-steps-list');
+    var fileUrl = data.assetBase + (spec.file || owner.file).replace('{v}', data.version);
+    spec.steps.forEach(function (st) {
+      var li = el('li', null, null);
+      li.appendChild(el('span', null, st.text + (st.link ? ' ' : '')));
+      if (st.link) {
+        var sl = el('a', 'link-quiet', st.link.text);
+        sl.setAttribute('href', st.link.href);
+        li.appendChild(sl);
+      }
+      if (st.code) {
+        var pre = el('pre', 'code-block');
+        pre.appendChild(el('code', null, st.code.replace(/\{v\}/g, data.version).replace(/\{url\}/g, fileUrl)));
+        li.appendChild(pre);
+      }
+      ol.appendChild(li);
+    });
+    box.appendChild(ol);
+    if (spec.stepsAfter) { box.appendChild(el('p', 'download-meta', spec.stepsAfter)); }
+    if (spec.stepsLink) {
+      var ml = el('a', 'link-quiet', spec.stepsLink.text);
+      ml.setAttribute('href', spec.stepsLink.href);
+      box.appendChild(ml);
+    }
+    return box;
+  }
+
+  // "Other ways to install": collapsed, so the one Download button stays the obvious choice.
+  function renderOther(p) {
+    var o = p.other;
+    var details = el('details', 'install-other');
+    details.appendChild(el('summary', null, o.title || 'Other ways to install'));
+    if (o.text) { details.appendChild(el('p', 'download-note', o.text)); }
+    if (o.file) {
+      var otherName = o.file.replace('{v}', data.version);
+      var link = el('a', 'link-quiet', 'Download ' + otherName + (o.size ? ' (' + o.size + ')' : ''));
+      link.setAttribute('href', data.assetBase + otherName);
+      link.setAttribute('data-platform', p.name + ' package');
+      details.appendChild(link);
+    }
+    if (o.steps && o.steps.length) { details.appendChild(renderSteps(o, p)); }
+    return details;
   }
 
   data.platforms.forEach(function (p) {
@@ -198,32 +255,10 @@ window.FINLEDGER_RELEASE = {
       main.appendChild(el('p', noteCls, p.note));
     }
     if (p.steps && p.steps.length) {
-      var box = el('div', 'install-steps');
-      box.appendChild(el('h4', null, p.stepsTitle || 'How to install'));
-      var ol = el('ol', 'install-steps-list');
-      p.steps.forEach(function (st) {
-        var li = el('li', null, null);
-        li.appendChild(el('span', null, st.text + (st.link ? ' ' : '')));
-        if (st.link) {
-          var sl = el('a', 'link-quiet', st.link.text);
-          sl.setAttribute('href', st.link.href);
-          li.appendChild(sl);
-        }
-        if (st.code) {
-          var pre = el('pre', 'code-block');
-          pre.appendChild(el('code', null, st.code.replace(/\{v\}/g, data.version).replace(/\{url\}/g, data.assetBase + p.file.replace('{v}', data.version))));
-          li.appendChild(pre);
-        }
-        ol.appendChild(li);
-      });
-      box.appendChild(ol);
-      if (p.stepsAfter) { box.appendChild(el('p', 'download-meta', p.stepsAfter)); }
-      if (p.stepsLink) {
-        var ml = el('a', 'link-quiet', p.stepsLink.text);
-        ml.setAttribute('href', p.stepsLink.href);
-        box.appendChild(ml);
-      }
-      main.appendChild(box);
+      main.appendChild(renderSteps(p, p));
+    }
+    if (p.other) {
+      main.appendChild(renderOther(p));
     }
     row.appendChild(main);
 
@@ -305,7 +340,7 @@ window.FINLEDGER_RELEASE = {
       item.appendChild(head);
       var files = el('ul', 'build-files');
       (row.rel.assets || []).forEach(function (a) {
-        if (!/\.(dmg|apk|AppImage|msix)$/.test(a.name)) { return; }
+        if (!/\.(dmg|apk|AppImage|msix|exe)$/.test(a.name)) { return; }
         var li = el('li', null, null);
         var link = el('a', 'link-quiet', a.name);
         link.setAttribute('href', a.browser_download_url);
