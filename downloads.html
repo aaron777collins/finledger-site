@@ -42,7 +42,7 @@ window.FINLEDGER_RELEASE = {
       state: "ready",
       kind: "DMG disk image",
       requires: "macOS 12 or later, Apple silicon and Intel",
-      size: "53.3 MB",
+      size: "53.4 MB",
       file: "Finledger-{v}.dmg",
       note: "Open the disk image and drag Finledger to your Applications folder."
     },
@@ -58,7 +58,7 @@ window.FINLEDGER_RELEASE = {
         title: "Other ways to install",
         text: "Already installed Finledger as the package (MSIX) version? Open Finledger and use Settings, About, Check for updates. You can also install the package by hand: it needs one PowerShell line using msixrun, which trusts the Finledger publisher once and asks for administrator permission.",
         file: "Finledger-{v}-x64.msix",
-        size: "120.2 MB",
+        size: "120.3 MB",
         stepsTitle: "Install the package with msixrun",
         steps: [
           { text: "Open PowerShell: click Start, type PowerShell, and open Windows PowerShell. Do not use Command Prompt, because this command does not work there. Paste this one line. It fetches msixrun, and msixrun downloads Finledger, installs it and opens it:", code: "& ([scriptblock]::Create((irm https://raw.githubusercontent.com/aaron777collins/msixrun/main/msixrun.ps1))) {url}" },
