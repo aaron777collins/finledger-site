@@ -25,6 +25,8 @@
 <!--   testing     in testing. No file. An optional "joinUrl" adds a       -->
 <!--               public TestFlight link, shown as a button.              -->
 <!--                                                                       -->
+<!-- Optional "buttonText" on a platform: the words on its Download button  -->
+<!-- (default "Download for <name>").                                       -->
 <!-- Optional "other" on a platform: a collapsed "Other ways to install"    -->
 <!-- note with its own file, steps, stepsAfter and stepsLink.              -->
 <!--                                                                       -->
@@ -42,7 +44,7 @@ window.FINLEDGER_RELEASE = {
       state: "ready",
       kind: "DMG disk image",
       requires: "macOS 12 or later, Apple silicon and Intel",
-      size: "54.0 MB",
+      size: "54.1 MB",
       file: "Finledger-{v}.dmg",
       note: "Open the disk image and drag Finledger to your Applications folder."
     },
@@ -73,18 +75,37 @@ window.FINLEDGER_RELEASE = {
     {
       name: "Linux",
       state: "ready",
-      kind: "AppImage, x86_64",
-      requires: "glibc 2.35 or later, built on Ubuntu 22.04",
-      size: "54.5 MB",
-      file: "Finledger-{v}-x86_64.AppImage",
-      note: "Make it executable with chmod +x, then run it. No install step."
+      kind: "Debian package (.deb), x86_64",
+      requires: "Ubuntu 22.04 or later, or Debian 12 or later.",
+      // Sizes are set at release, from the files that were really published
+      // (workbench/RELEASE-DOWNLOADS.md). Without a size the line is simply left out.
+      size: "38.2 MB",
+      file: "Finledger-{v}-amd64.deb",
+      buttonText: "Download for Ubuntu and Debian (.deb)",
+      note: "Open the file and click Install.",
+      other: {
+        title: "For other Linux systems (AppImage)",
+        text: "For Fedora, Arch, openSUSE and other systems. The AppImage is one file with nothing to install.",
+        file: "Finledger-{v}-x86_64.AppImage",
+        size: "49.7 MB",
+        stepsTitle: "Open the AppImage without a terminal",
+        steps: [
+          { text: "Download the file, then open your file manager and go to the folder it was saved in (usually Downloads)." },
+          { text: "Right-click the Finledger AppImage file and choose Properties." },
+          { text: "Open the Permissions tab and turn on \u201cAllow executing file as program\u201d. On some desktops this switch is called \u201cExecutable as program\u201d or \u201cIs executable\u201d." },
+          { text: "Close the window, then double-click the file. Finledger opens." },
+          { text: "The first time it opens, Finledger asks if it may add itself to your app menu. Choose Add if you want to start it from the menu next time." },
+          { text: "Prefer a terminal? This does the same as steps 2 and 3, and then starts it. Run it in the folder that holds the file:", code: "chmod +x Finledger-{v}-x86_64.AppImage && ./Finledger-{v}-x86_64.AppImage" }
+        ],
+        stepsAfter: "If nothing happens when you double-click, your system may not let AppImages start the usual way. In a terminal, run ./Finledger-{v}-x86_64.AppImage --appimage-extract-and-run instead. It unpacks the app into a temporary folder and starts it."
+      }
     },
     {
       name: "Android",
       state: "ready",
       kind: "APK",
       requires: "Android 8.0 or later",
-      size: "106.9 MB",
+      size: "107.0 MB",
       file: "Finledger-{v}.apk",
       note: "Android asks you to allow installs from your browser the first time. The app is signed with the Finledger key."
     },
@@ -127,7 +148,7 @@ window.FINLEDGER_RELEASE = {
 
     <div class="download-list" id="download-list">
       <noscript>
-        <p class="download-note">This list is built in your browser. With JavaScript off, get the files straight from the <a href="https://github.com/aaron777collins/finledger-site/releases/tag/v1.0.0">Finledger 1.0.0 release page</a>: <code>Finledger-1.0.0.dmg</code> for macOS, <code>Finledger-1.0.0-x86_64.AppImage</code> for Linux and <code>Finledger-1.0.0.apk</code> for Android. <code>Finledger-1.0.0-x64-setup.exe</code> is the installer for Windows. Windows may show &ldquo;Windows protected your PC&rdquo; the first time, because Finledger is not signed yet: click More info, then Run anyway. On a new Windows 11 PC with Smart App Control turned on, Windows blocks it and offers no Run anyway. The package version, <code>Finledger-1.0.0-x64.msix</code>, is also there; it installs with <a href="https://github.com/aaron777collins/msixrun">msixrun</a>. iPhone: join the TestFlight beta at <a href="https://testflight.apple.com/join/qCmtX2Mu">testflight.apple.com/join/qCmtX2Mu</a>.</p>
+        <p class="download-note">This list is built in your browser. With JavaScript off, get the files straight from the <a href="https://github.com/aaron777collins/finledger-site/releases/tag/v1.0.0">Finledger 1.0.0 release page</a>: <code>Finledger-1.0.0.dmg</code> for macOS, <code>Finledger-1.0.0-amd64.deb</code> for Ubuntu and Debian, <code>Finledger-1.0.0-x86_64.AppImage</code> for other Linux systems and <code>Finledger-1.0.0.apk</code> for Android. <code>Finledger-1.0.0-x64-setup.exe</code> is the installer for Windows. Windows may show &ldquo;Windows protected your PC&rdquo; the first time, because Finledger is not signed yet: click More info, then Run anyway. On a new Windows 11 PC with Smart App Control turned on, Windows blocks it and offers no Run anyway. The package version, <code>Finledger-1.0.0-x64.msix</code>, is also there; it installs with <a href="https://github.com/aaron777collins/msixrun">msixrun</a>. iPhone: join the TestFlight beta at <a href="https://testflight.apple.com/join/qCmtX2Mu">testflight.apple.com/join/qCmtX2Mu</a>.</p>
       </noscript>
     </div>
   </section>
@@ -207,7 +228,7 @@ window.FINLEDGER_RELEASE = {
       ol.appendChild(li);
     });
     box.appendChild(ol);
-    if (spec.stepsAfter) { box.appendChild(el('p', 'download-meta', spec.stepsAfter)); }
+    if (spec.stepsAfter) { box.appendChild(el('p', 'download-meta', spec.stepsAfter.replace(/\{v\}/g, data.version))); }
     if (spec.stepsLink) {
       var ml = el('a', 'link-quiet', spec.stepsLink.text);
       ml.setAttribute('href', spec.stepsLink.href);
@@ -273,7 +294,7 @@ window.FINLEDGER_RELEASE = {
         a.setAttribute('aria-label', 'Download ' + fileName + ' for ' + p.name + '. ' +
           (p.caution || 'One extra step') + '.');
       } else {
-        a = el('a', 'button', 'Download for ' + p.name);
+        a = el('a', 'button', p.buttonText || ('Download for ' + p.name));
       }
       a.setAttribute('href', href);
       a.setAttribute('data-platform', p.name);
@@ -340,7 +361,7 @@ window.FINLEDGER_RELEASE = {
       item.appendChild(head);
       var files = el('ul', 'build-files');
       (row.rel.assets || []).forEach(function (a) {
-        if (!/\.(dmg|apk|AppImage|msix|exe)$/.test(a.name)) { return; }
+        if (!/\.(dmg|apk|AppImage|deb|msix|exe)$/.test(a.name)) { return; }
         var li = el('li', null, null);
         var link = el('a', 'link-quiet', a.name);
         link.setAttribute('href', a.browser_download_url);
